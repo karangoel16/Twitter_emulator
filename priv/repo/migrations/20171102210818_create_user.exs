@@ -4,7 +4,8 @@ defmodule Twitter.Repo.Migrations.CreateUser do
   def change do
     create table(:users) do
       add :email, :string
-      add :crypted_password, :string
+      add :name, :string
+      add :encrypt_pass, :string
 
       timestamps()
     end

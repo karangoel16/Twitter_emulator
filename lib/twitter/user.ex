@@ -7,6 +7,7 @@ defmodule Twitter.User do
   schema "users" do
     field :email, :string
     field :encrypt_pass, :string
+    field :name
     field :password, :string, virtual: true
     timestamps()
   end
@@ -14,8 +15,9 @@ defmodule Twitter.User do
   @doc false
   def changeset(%User{} = user, attrs\\%{}) do
     user
-    |> cast(attrs, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(attrs, [:email, :name, :password])
+    |> validate_required([:email, :name, :password])
+    |> unique_constraint(:name)
     |> unique_constraint(:email)
   end
 
