@@ -4,6 +4,7 @@ defmodule TwitterWeb.RoomChannel do
     alias Twitter.Tweet
     alias Twitter.Repo
     alias Twitter.User 
+    alias TwitterWeb.HashController
 
     def join("room:lobby", _ , socket) do
         send self(), :after_join 
@@ -21,12 +22,13 @@ defmodule TwitterWeb.RoomChannel do
     def handle_in("message:new", message, socket) do
         #Enum.map(Regex.scan(~r/\B#[á-úÁ-Úä-üÄ-Üa-zA-Z0-9_]+/, message),fn(x)->
         #    //    
-        #end)
-        IO.inspect  Repo.get_by(Twitter.User, name: socket.assigns.user).id         
+        #end)         
         changeset = Tweet.changeset(%Tweet{user_id: Repo.get_by(Twitter.User, name: socket.assigns.user).id }, %{text: message })
         case Repo.insert(changeset) do
-            {:ok, _user} ->
-                IO.puts "error not done"
+            {:ok, tweet} ->
+                Enum.map(Regex.scan(~r/\B#[á-úÁ-Úä-üÄ-Üa-zA-Z0-9_]+/, message),fn(x)->
+                    HashController.hash_add((x|>List.to_tuple|>elem(0)),tweet.id)
+                end)
             {:error, changeset}->
                 IO.inspect changeset
         end
