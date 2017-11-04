@@ -1,0 +1,9 @@
+<h2>Profile</h2>
+<%= link "Back", to: user_path(@conn, :index),class: "btn btn-default btn-xs" %>
+<ul>
+    <li>
+        <strong>Email:
+            <%= @user.email%>
+        </strong>
+    </li>
+</ul>

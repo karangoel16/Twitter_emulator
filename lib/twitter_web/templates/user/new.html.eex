@@ -1,0 +1,5 @@
+<h3>Registeration</h3>
+<div class="jumbotron">
+    <%= render "form.html", changeset: @changeset, action: user_path(@conn, :create) %>
+</div>
+<%= link "Back", to: user_path(@conn, :index) %>

@@ -17,9 +17,9 @@ defmodule TwitterWeb.RoomChannel do
 
     def handle_in("message:new", message, socket) do
         broadcast! socket, "message:new", %{
-            user: socket.assign.user,
+            user: socket.assigns.user,
             body: message,
-            timestamp: :os.timestamp(:milli_seconds)
+            timestamp: :os.system_time(:milli_seconds)
         }
         {:noreply,socket}
     end

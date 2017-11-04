@@ -1,0 +1,15 @@
+<h2>Listing User</h2>
+<div class="row">
+    <div class="col-md-8">
+        <%= for user <- @users do %>
+        <li>
+            <strong>
+                <%= user.email %>
+            </strong>
+            <span class="push-right">
+                    <%= link "Show", to: user_path(@conn,:show,user), class: "btn btn-default btn-xs" %>
+            </span>
+        </li>
+        <% end %>
+    </div>
+</div>

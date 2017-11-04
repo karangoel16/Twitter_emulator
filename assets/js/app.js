@@ -64,25 +64,21 @@ messageInput.addEventListener("keypress",(e)=>{
         messageInput.value=""
     }
 })
+
 let messageList = document.getElementById("messageList")
+
 let renderMessage = (message) =>{
-    message=>{
         console.log(message)
         let messageElement = document.createElement("li")
         messageElement.innerHTML=`
             <b>${message.user}</b><br>
             <i>${format(message.timestamp)}</i>
+            <p>${message.body}</p>
         `
         messageList.appendChild(messageElement)
-        messageList.scrollTop = messageList.scrollHeight;
-    }
+        messageList.scrollTop = messageList.scrollHeight
 }
+
 room.on("message:new",message => renderMessage(message))
 room.join()
 
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
-
-// import socket from "./socket"
