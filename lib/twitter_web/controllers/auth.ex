@@ -10,8 +10,6 @@ defmodule Twitter.Auth do
     def login_with(conn,email, pass, opts) do
         repo = Keyword.fetch!(opts, :repo)
         user = repo.get_by(Twitter.User, email: email)
-        IO.puts pass
-        IO.puts user.encrypt_pass
         cond do 
             user && checkpw(pass, user.encrypt_pass)->
                 {:ok,login(conn,user)}

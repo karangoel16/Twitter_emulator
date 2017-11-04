@@ -12,18 +12,19 @@ defmodule TwitterWeb.SessionController do
             {:ok, conn} ->
                 logged_user = Guardian.Plug.current_resource(conn)
                 conn
-                |> put_flash(:info, "User created Succesfully")
+                |> put_flash(:info, "logged In")
                 |> redirect(to: page_path(conn, :index))
             {:error, _reason, conn}->
                 conn
-                |> put_flash(:info, "User created Succesfully")
-                |> redirect("new.html")
+                |> put_flash(:error, "Wrong Username/Password")
+                |> redirect(to: session_path(conn,:new))
         end
     end
 
     def delete(conn, _) do
+        IO.puts "hello"
         conn
         |> Guardian.Plug.sign_out
-        |> redirect(to: '/')
+        |> redirect(to: "/")
     end
 end

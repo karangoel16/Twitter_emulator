@@ -40,6 +40,7 @@ defmodule TwitterWeb do
       import TwitterWeb.Router.Helpers
       import TwitterWeb.ErrorHelpers
       import TwitterWeb.Gettext
+      import TwitterWeb.ViewHelper
     end
   end
 
