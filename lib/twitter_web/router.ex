@@ -31,7 +31,7 @@ defmodule TwitterWeb.Router do
   scope "/", TwitterWeb do
     pipe_through [:browser, :browser_auth]
     resources "/users", UserController, only: [:show, :index, :update]
-    get "/Tweet", PageController, :index
+    get "/tweet", PageController, :index
   end
   
   # Other scopes may use custom stacks.

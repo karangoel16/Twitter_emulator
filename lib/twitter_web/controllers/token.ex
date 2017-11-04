@@ -7,7 +7,7 @@ defmodule Twitter.Token do
         |> redirect(to: session_path(conn, :new))
     end
 
-    def unautherized(conn, _params) do
+    def unauthorized(conn, _params) do
         conn
         |> put_flash(:error, "You must be logged in!")
         |> redirect(to: session_path(conn, :new))
