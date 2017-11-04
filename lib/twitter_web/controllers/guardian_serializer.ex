@@ -1,4 +1,4 @@
-defmodule TwitterWeb.GuardianSerializer do
+defmodule Twitter.GuardianSerializer do
     @behaviour Guardian.Serializer
   
     alias Twitter.Repo

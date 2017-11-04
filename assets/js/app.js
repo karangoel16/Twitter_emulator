@@ -11,7 +11,8 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-//import "phoenix_html"
+
+import "phoenix_html"
 
 import {Socket, Presence} from "phoenix"
 
@@ -35,7 +36,7 @@ let listBy =(user, {metas: metas}) => {
 let userList = document.getElementById("userList")
 
 let render = (presence) => {
-   console.log()
+   console.log(presence)
     userList.innerHTML = Presence.list(presence,listBy)
     .map(presence=>`
         <li>
@@ -68,7 +69,6 @@ messageInput.addEventListener("keypress",(e)=>{
 let messageList = document.getElementById("messageList")
 
 let renderMessage = (message) =>{
-        console.log(message)
         let messageElement = document.createElement("li")
         messageElement.innerHTML=`
             <b>${message.user}</b><br>

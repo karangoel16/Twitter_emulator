@@ -1,6 +1,7 @@
 defmodule TwitterWeb.SessionController do
     use TwitterWeb, :controller
 
+    import Twitter.Auth
     alias Twitter.Repo
 
     def new(conn, _params) do
@@ -8,7 +9,7 @@ defmodule TwitterWeb.SessionController do
     end
 
     def create(conn, %{"session" => %{"email" => user, "password" => password}}) do
-        case Twitter.Auth.login_with(conn, user, password, repo: Repo) do
+        case login_with(conn, user, password, repo: Repo) do
             {:ok, conn} ->
                 logged_user = Guardian.Plug.current_resource(conn)
                 conn
@@ -21,10 +22,10 @@ defmodule TwitterWeb.SessionController do
         end
     end
 
-    def delete(conn, _) do
+    def delete(conn,_) do
         IO.puts "hello"
         conn
         |> Guardian.Plug.sign_out
-        |> redirect(to: "/")
+        |> redirect(to: page_path(conn, :index))
     end
 end
