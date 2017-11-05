@@ -25,6 +25,7 @@ defmodule TwitterWeb.Router do
     pipe_through :browser # Use the default browser stack
     resources "/users", UserController, [:new, :create]
     resources "/sessions", SessionController, only: [:create, :delete]
+    resources "/hash", HashController, [ :index ]
     get "/", SessionController, :new
   end
 

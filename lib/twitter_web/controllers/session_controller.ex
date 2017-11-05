@@ -23,7 +23,6 @@ defmodule TwitterWeb.SessionController do
     end
 
     def delete(conn,_) do
-        IO.puts "hello"
         conn
         |> Guardian.Plug.sign_out
         |> redirect(to: page_path(conn, :index))

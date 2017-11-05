@@ -1,0 +1,11 @@
+<h3>HashTags</h3>
+<ul>
+     <%= for hash <- @hashs do %>
+        <li>
+            <strong>
+                <b><%=hash["text"]%></b><br>  
+                <p><%= hash["name"]%></p> 
+            </strong>
+        </li>
+    <% end %>
+</ul>
