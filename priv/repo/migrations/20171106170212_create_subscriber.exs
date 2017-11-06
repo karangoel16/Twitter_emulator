@@ -9,4 +9,5 @@ defmodule Twitter.Repo.Migrations.CreateSubscriber do
       timestamps()
     end
   end
+  #create unique_index(:subscriber, [:user_from_id, :user_to_id])
 end

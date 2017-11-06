@@ -6,8 +6,16 @@ defmodule TwitterWeb.RoomChannel do
     alias Twitter.User 
     alias TwitterWeb.HashController
 
+    alias Phoenix.Socket.Broadcast
+    def handle_info(%Broadcast{topic: _, event: ev, payload: payload}, socket) do
+      push socket, ev, payload
+      {:noreply, socket}
+    end
+    
     def join("room:lobby", _ , socket) do
-        send self(), :after_join 
+        send self(), :after_join
+        #user will subscribe to its room plus the room of others 
+        TwitterWeb.Endpoint.subscribe("room:" <> socket.assigns.user)
         {:ok,socket}
     end
 
@@ -32,11 +40,11 @@ defmodule TwitterWeb.RoomChannel do
             {:error, changeset}->
                 IO.inspect changeset
         end
-        broadcast! socket, "message:new", %{
+        TwitterWeb.Endpoint.broadcast!("room:"<>socket.assigns.user, "message:new", %{
             user: socket.assigns.user,
             body: message,
             timestamp: :os.system_time(:milli_seconds)
-        }
+        })
         {:noreply,socket}
     end
 end

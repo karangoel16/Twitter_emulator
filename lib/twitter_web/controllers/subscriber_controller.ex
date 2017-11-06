@@ -8,7 +8,7 @@ defmodule TwitterWeb.SubscriberController do
 
     import Ecto.Query
 
-    def new(conn,%{"id"=>id}) do
+    def show(conn,%{"id"=>id}) do
         subscriber = %Subscriber{user_from: Guardian.Plug.current_resource(conn), user_to: Repo.get(User,id)}
         changeset = Subscriber.changeset(subscriber, %{})
         case Repo.insert(changeset) do
@@ -24,7 +24,7 @@ defmodule TwitterWeb.SubscriberController do
         end
     end
     
-    def show(conn,_params) do
+    def new(conn,_params) do
         query= from u in User,
         join: s in Subscriber,
         where: u.id == s.user_to_id and s.user_from_id == ^Guardian.Plug.current_resource(conn).id,

@@ -14,7 +14,7 @@ defmodule Twitter.Subscriber do
   @doc false
   def changeset(%Subscriber{} = subscriber, attrs) do
     subscriber
-    |> cast(attrs, [])
+    |> cast(attrs, [:user_from_id, :user_to_id])
     |> validate_required([])
   end
 end
