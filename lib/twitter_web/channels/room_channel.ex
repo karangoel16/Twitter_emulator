@@ -4,18 +4,32 @@ defmodule TwitterWeb.RoomChannel do
     alias Twitter.Tweet
     alias Twitter.Repo
     alias Twitter.User 
+    alias Twitter.Subscriber
     alias TwitterWeb.HashController
+
+    import Ecto.Query
 
     alias Phoenix.Socket.Broadcast
     def handle_info(%Broadcast{topic: _, event: ev, payload: payload}, socket) do
       push socket, ev, payload
       {:noreply, socket}
     end
-    
+
     def join("room:lobby", _ , socket) do
         send self(), :after_join
-        #user will subscribe to its room plus the room of others 
         TwitterWeb.Endpoint.subscribe("room:" <> socket.assigns.user)
+        #user will subscribe to its room plus the room of others 
+        query = from u in User,
+        where: u.name == ^socket.assigns.user,
+        select: %{"id" => u."id"}
+        id=Repo.one(query)["id"]
+        query= from u in User,
+        join: s in Subscriber,
+        where: u.id == s.user_to_id and s.user_from_id == ^id,
+        select: %{"name"=>u.name}
+        Enum.map(Repo.all(query),fn(x)-> 
+            TwitterWeb.Endpoint.subscribe("room:" <> x["name"])
+        end)
         {:ok,socket}
     end
 
