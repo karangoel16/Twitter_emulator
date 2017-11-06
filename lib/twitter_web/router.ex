@@ -25,13 +25,14 @@ defmodule TwitterWeb.Router do
     pipe_through :browser # Use the default browser stack
     resources "/users", UserController, [:new, :create]
     resources "/sessions", SessionController, only: [:create, :delete]
-    resources "/hash", HashController, [ :index ]
     get "/", SessionController, :new
   end
 
   scope "/", TwitterWeb do
     pipe_through [:browser, :browser_auth]
     resources "/users", UserController, only: [:show, :index, :update]
+    resources "/hash", HashController, [ :index ]
+    resources "/subscriber", SubscriberController, [:show]
     get "/tweet", PageController, :index
   end
   
