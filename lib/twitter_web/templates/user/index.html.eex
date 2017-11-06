@@ -7,7 +7,7 @@
                 <%= user.email %>
             </strong>
             <span class="push-right">
-                    <%= link "Show", to: subscriber_path(@conn,:show,user), class: "btn btn-default btn-xs" %>
+                    <%= link "Show", to: subscriber_path(@conn,:new,user), class: "btn btn-default btn-xs" %>
             </span>
         </li>
         <% end %>

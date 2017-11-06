@@ -2,9 +2,18 @@ defmodule TwitterWeb.UserController do
     use TwitterWeb, :controller
 
     alias Twitter.User
+    alias Twitter.Subscriber
     alias Twitter.Repo
 
+    import Ecto.Query
+
     def index(conn,_params) do
+        query= from u in User,
+        join: s in Subscriber,
+        where: u.id == s.user_to_id and s.user_from_id != ^Guardian.Plug.current_resource(conn).id,
+        select: %{"email" => u."email","val"=>s.user_to_id}
+        subscriber1= Repo.all(query)
+        IO.inspect subscriber1
         users = Repo.all(User)
         render(conn, "index.html", users: users)
     end

@@ -1,0 +1,13 @@
+<h2>Subscribed User</h2>
+<div class="row">
+    <div class="col-md-8">
+        <%= for user <- @subscriber do %>
+        <li>
+            <strong>
+                <%= user["email"] %>
+            </strong>
+                <%= user["name"] %>
+        </li>
+        <% end %>
+    </div>
+</div>
